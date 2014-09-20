@@ -247,9 +247,17 @@ var _ = {};
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
-    return _.every(collection, function(){
-      
-    })
+    //modify _.every to test if everything is FALSE(insead of true). If everything is NOT false (it fails), then some returns true.
+    function negate(func) {
+      return function(x) {
+        return !func(x);
+      };
+    }
+
+    
+    return !(_.every(collection, negate((arguments.length>1) ? iterator : _.identity)));
+  
+
   };
 
 
@@ -272,6 +280,7 @@ var _ = {};
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    
   };
 
   // Like extend, but doesn't ever overwrite a key that already
